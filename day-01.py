@@ -47,6 +47,9 @@ def process_instructions(
     dial_position = initial_position
     print(f"Dial position: {dial_position}")
 
+    zero_by_clicks = 0
+    zero_by_instructions = 0
+
     for instruction in instructions:
         match = INSTRUCTION_PATTERN.match(instruction)
         if not match:
@@ -58,24 +61,27 @@ def process_instructions(
 
         print(f"instruction={instruction!r}, letter={letter!r}, number={number}")
 
-        # part 1 solution
+        for number in range(number):
+            if letter == "L":
+                dial_position -= 1
+            elif letter == "R":
+                dial_position += 1
+            else:
+                raise
 
-        # if letter == "L":
-        #     dial_position -= number
-        # elif letter == "R":
-        #     dial_position += number
-        # else:
-        #     print(f"Unrecognized letter: {letter!r}")
-        #     continue
+            dial_position = (dial_position) % 100
 
-        # dial_position = (dial_position) % 100
+            if not dial_position:
+                zero_by_clicks += 1
 
-        # print(f"Dial position: {dial_position}")
-        # if not dial_position:
-        #     zeros += 1
-        #     print(f"Got a zero, up to {zeros} zeros.")
+            print(
+                f"position: {dial_position}, instructions: {zero_by_instructions}, clicks: {zero_by_clicks}"
+            )
 
-    return zeros
+        if not dial_position:
+            zero_by_instructions += 1
+
+    return (zero_by_instructions, zero_by_clicks)
 
 
 def main() -> None:
@@ -86,7 +92,7 @@ def main() -> None:
     lines = read_input(input_path)
 
     zeros = process_instructions(instructions=lines)
-    print(f"Zeros found: {zeros}")
+    print(f"Zeros by instructions: {zeros[0]} and zeros by clicks: {zeros[1]}")
 
 
 if __name__ == "__main__":
