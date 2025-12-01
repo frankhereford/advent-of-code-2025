@@ -6,7 +6,7 @@ Each day lives in its own script (for example, `day-01.py`) and typically reads 
 
 ## 🤖 AI
 
-AI is used in a limit fashion, detailed below. These solutions are not intended for the leaderboard, nor are they even remotely able to get on the leaderboard even if they were.
+AI is used in a limited fashion, detailed below. These solutions are not intended for the leaderboard, nor are they even remotely able to get on the leaderboard even if they were.
 
 - Tab completion turn off
 - No AI used to develop the algorithm of the solution
