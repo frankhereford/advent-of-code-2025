@@ -84,7 +84,7 @@ def main() -> None:
     lines = read_input(input_path)
 
     zeros = process_instructions(instructions=lines)
-    print("")
+    print(f"Zeros found: {zeros}")
 
 
 if __name__ == "__main__":
