@@ -30,14 +30,16 @@ INSTRUCTION_PATTERN = re.compile(r"^(\w)(\d+)$")
 
 def process_instructions(
     initial_position: int = 50, instructions: list[str] | None = None
-) -> int:
-    """Print each instruction and parse it into its components.
+) -> tuple[int, int]:
+    """Print each instruction, update the dial, and count zeros.
 
     Args:
-        initial_position: Starting position value (currently unused, defaults to 50).
+        initial_position: Starting dial position (defaults to 50).
         instructions: List of instruction strings to process.
     Returns:
-        zeros: Integer count (currently unused placeholder, always 0).
+        tuple[int, int]: A tuple `(zeros_by_instructions, zeros_by_clicks)` where:
+            - `zeros_by_instructions` is how many instructions end on position 0.
+            - `zeros_by_clicks` is how many individual clicks land on position 0.
     """
     if instructions is None:
         instructions = []
