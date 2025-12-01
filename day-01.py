@@ -40,6 +40,9 @@ def process_instructions(
     if instructions is None:
         instructions = []
 
+    dial_position = initial_position
+    print(f"Dial position: {dial_position}")
+
     for instruction in instructions:
         match = INSTRUCTION_PATTERN.match(instruction)
         if not match:
@@ -50,6 +53,18 @@ def process_instructions(
         number = int(number_str)
 
         print(f"instruction={instruction!r}, letter={letter!r}, number={number}")
+
+        if letter == "L":
+            dial_position -= number
+        elif letter == "R":
+            dial_position += number
+        else:
+            print(f"Unrecognized letter: {letter!r}")
+            continue
+
+        dial_position = (dial_position) % 100
+
+        print(f"Dial position: {dial_position}")
 
 
 def main() -> None:
