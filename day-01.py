@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import logging
 import re
 from pathlib import Path
 
@@ -26,6 +27,7 @@ def parse_args() -> argparse.Namespace:
 
 
 INSTRUCTION_PATTERN = re.compile(r"^(\w)(\d+)$")
+logger = logging.getLogger(__name__)
 
 
 def process_instructions(
@@ -44,10 +46,8 @@ def process_instructions(
     if instructions is None:
         instructions = []
 
-    zeros = 0
-
     dial_position = initial_position
-    print(f"Dial position: {dial_position}")
+    logger.info("Dial position: %s", dial_position)
 
     zero_by_clicks = 0
     zero_by_instructions = 0
@@ -55,13 +55,15 @@ def process_instructions(
     for instruction in instructions:
         match = INSTRUCTION_PATTERN.match(instruction)
         if not match:
-            print(f"Unrecognized instruction format: {instruction!r}")
+            logger.warning("Unrecognized instruction format: %r", instruction)
             continue
 
         letter, number_str = match.groups()
         number = int(number_str)
 
-        print(f"instruction={instruction!r}, letter={letter!r}, number={number}")
+        logger.debug(
+            "instruction=%r, letter=%r, number=%d", instruction, letter, number
+        )
 
         for number in range(number):
             if letter == "L":
@@ -76,8 +78,11 @@ def process_instructions(
             if not dial_position:
                 zero_by_clicks += 1
 
-            print(
-                f"position: {dial_position}, instructions: {zero_by_instructions}, clicks: {zero_by_clicks}"
+            logger.debug(
+                "position: %s, instructions: %s, clicks: %s",
+                dial_position,
+                zero_by_instructions,
+                zero_by_clicks,
             )
 
         if not dial_position:
@@ -87,14 +92,19 @@ def process_instructions(
 
 
 def main() -> None:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    )
+
     args = parse_args()
     input_path: Path = args.input
 
-    print(f"Using input file: {input_path}")
+    logger.info("Using input file: %s", input_path)
     lines = read_input(input_path)
 
     zeros = process_instructions(instructions=lines)
-    print(f"Zeros by instructions: {zeros[0]} and zeros by clicks: {zeros[1]}")
+    logger.info("Zeros by instructions: %d and zeros by clicks: %d", zeros[0], zeros[1])
 
 
 if __name__ == "__main__":
