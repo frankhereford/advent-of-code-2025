@@ -30,15 +30,19 @@ INSTRUCTION_PATTERN = re.compile(r"^(\w)(\d+)$")
 
 def process_instructions(
     initial_position: int = 50, instructions: list[str] | None = None
-) -> None:
+) -> int:
     """Print each instruction and parse it into its components.
 
     Args:
         initial_position: Starting position value (currently unused, defaults to 50).
         instructions: List of instruction strings to process.
+    Returns:
+        zeros: Integer count (currently unused placeholder, always 0).
     """
     if instructions is None:
         instructions = []
+
+    zeros = 0
 
     dial_position = initial_position
     print(f"Dial position: {dial_position}")
@@ -65,6 +69,11 @@ def process_instructions(
         dial_position = (dial_position) % 100
 
         print(f"Dial position: {dial_position}")
+        if not dial_position:
+            zeros += 1
+            print(f"Got a zero, up to {zeros} zeros.")
+
+    return zeros
 
 
 def main() -> None:
@@ -74,7 +83,8 @@ def main() -> None:
     print(f"Using input file: {input_path}")
     lines = read_input(input_path)
 
-    process_instructions(instructions=lines)
+    zeros = process_instructions(instructions=lines)
+    print("")
 
 
 if __name__ == "__main__":
