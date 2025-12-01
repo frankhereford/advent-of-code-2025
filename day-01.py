@@ -58,20 +58,22 @@ def process_instructions(
 
         print(f"instruction={instruction!r}, letter={letter!r}, number={number}")
 
-        if letter == "L":
-            dial_position -= number
-        elif letter == "R":
-            dial_position += number
-        else:
-            print(f"Unrecognized letter: {letter!r}")
-            continue
+        # part 1 solution
 
-        dial_position = (dial_position) % 100
+        # if letter == "L":
+        #     dial_position -= number
+        # elif letter == "R":
+        #     dial_position += number
+        # else:
+        #     print(f"Unrecognized letter: {letter!r}")
+        #     continue
 
-        print(f"Dial position: {dial_position}")
-        if not dial_position:
-            zeros += 1
-            print(f"Got a zero, up to {zeros} zeros.")
+        # dial_position = (dial_position) % 100
+
+        # print(f"Dial position: {dial_position}")
+        # if not dial_position:
+        #     zeros += 1
+        #     print(f"Got a zero, up to {zeros} zeros.")
 
     return zeros
 
